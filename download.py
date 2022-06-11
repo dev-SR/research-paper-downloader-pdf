@@ -144,8 +144,8 @@ def downloadManager():
     dl_dict = dl.to_dict('records')
     uuids = [d['uuid'] for d in dl_dict]
     paperIds = [d['paper_id'] for d in dl_dict]
-    next_dl = inf[~inf['uuid'].isin(uuids)]
-    next_dl_dict = next_dl.to_dict('records')[:n]
+    next_dl = inf[~inf['uuid'].isin(uuids)][:n]
+    next_dl_dict = next_dl.to_dict('records')
     console.print(f"Downloading {n} papers")
 
     for d in next_dl_dict:
