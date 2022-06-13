@@ -181,6 +181,7 @@ def downloadManager():
                     dlDf.to_csv("data/info/processed.csv",
                                 index=False, header=False, mode="a")
                     console.log("[green]already downloaded[/]")
+                    success=True
                     break
                 # download the paper
                 else:
@@ -235,7 +236,7 @@ def startJob():
                   minutes=5,
                   #   seconds=2,
                   next_run_time=datetime.now(),  # start immediately
-                  end_date=datetime.now() + timedelta(minutes=2),
+                  end_date=datetime.now() + timedelta(hours=1),
                   id='my_job_id')
 
     def execution_listener(event):
