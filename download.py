@@ -1,20 +1,15 @@
 from datetime import datetime, timedelta
-import os
-from time import sleep
-# from rich.console import Console
 import pandas as pd
-from collections import deque
 from apscheduler.schedulers.background import BlockingScheduler
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 from pytz import timezone
+from subprocess import check_output, CalledProcessError
 
 import requests
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter, Retry
 from requests.packages import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-from subprocess import check_output, STDOUT, CalledProcessError
 
 from rich.console import Console
 import argparse
@@ -119,11 +114,14 @@ def downloadSS(url, fName):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.53",
     }
-
+    retry_strategy = Retry(
+        total=3,
+        backoff_factor=.5,
+        # backoff_factor to apply between attempts after the second try (most errors are resolved immediately by a second try without a delay)
+        status_forcelist=[403, 406, 429, 500, 502, 503, 504],
+    )
     session = requests.Session()
-    session = requests.Session()
-    retry = Retry(connect=3, backoff_factor=0.5)
-    adapter = HTTPAdapter(max_retries=retry)
+    adapter = HTTPAdapter(max_retries=retry_strategy)
     session.mount('http://', adapter)
     session.mount('https://', adapter)
     res = session.get(url, headers=headers, verify=False, timeout=30)
