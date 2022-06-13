@@ -9,6 +9,7 @@ rich = "*"
 inquirer = "*"
 apscheduler = "*"
 pandas = "*"
+requests = "*"
 
 [dev-packages]
 autopep8 = "*"
