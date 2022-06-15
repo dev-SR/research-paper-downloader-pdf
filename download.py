@@ -180,8 +180,10 @@ def downloadManager():
                     }])
                     dlDf.to_csv("data/info/processed.csv",
                                 index=False, header=False, mode="a")
+                    dlDf.to_csv("data/info/done.csv",
+                                index=False, header=False, mode="a")
                     console.log("[green]already downloaded[/]")
-                    success=True
+                    success = True
                     break
                 # download the paper
                 else:
@@ -197,6 +199,8 @@ def downloadManager():
                                 'paper_id': paper_id,
                             }])
                             dlDf.to_csv("data/info/processed.csv",
+                                        index=False, header=False, mode="a")
+                            dlDf.to_csv("data/info/done.csv",
                                         index=False, header=False, mode="a")
                             console.log("[bright_green]downloaded[/]")
                             success = True
