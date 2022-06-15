@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from time import sleep
 import pandas as pd
 from apscheduler.schedulers.background import BlockingScheduler
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
@@ -252,7 +253,11 @@ def startJob():
                 console.log("Pushing to the remote repo")
                 handleGitPush()
 
+                sleep(.5)
+                print()
+                
                 console.log("Push Done!")
+
                 console.log(
                     f"[yellow]Next Job scheduled to be run at: {job.next_run_time}[/]")
                 # check if there is any paper in the queu
