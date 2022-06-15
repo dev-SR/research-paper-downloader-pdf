@@ -237,10 +237,10 @@ def startJob():
     sched = BlockingScheduler(timezone=timezone('Asia/Dhaka'))
 
     sched.add_job(downloadManager, 'interval',
-                  minutes=5,
+                  minutes=2,
                   #   seconds=2,
                   next_run_time=datetime.now(),  # start immediately
-                  end_date=datetime.now() + timedelta(hours=2),
+                  end_date=datetime.now() + timedelta(minutes=2),
                   id='my_job_id')
 
     def execution_listener(event):
