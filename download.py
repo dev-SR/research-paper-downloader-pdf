@@ -246,8 +246,12 @@ def startJob():
                 downloadedPost = pd.read_csv("data/info/done.csv")
                 postLen = len(downloadedPost)
                 handleGitCommit(f"{(postLen - preLen)} papers downloaded")
-                msg = withLoader(
-                    handleGitPush, message="Pushing to the remote repo")
+                # msg = withLoader(
+                #     handleGitPush, message="Pushing to the remote repo")
+                
+                console.log("Pushing to the remote repo")
+                handleGitPush()
+
                 console.log("Push Done!")
                 console.log(
                     f"[yellow1]Next Job scheduled to be run at: {job.next_run_time}[/]")
