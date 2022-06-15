@@ -230,7 +230,7 @@ def startJob():
                   minutes=5,
                   #   seconds=2,
                   next_run_time=datetime.now(),  # start immediately
-                  end_date=datetime.now() + timedelta(hours=2),
+                #   end_date=datetime.now() + timedelta(hours=2),
                   id='my_job_id')
 
     def execution_listener(event):
@@ -248,7 +248,7 @@ def startJob():
                 handleGitCommit(f"{(postLen - preLen)} papers downloaded")
                 msg = withLoader(
                     handleGitPush, message="Pushing to the remote repo")
-                console.log(msg)
+                console.log("Push Done!")
                 console.log(
                     f"[yellow1]Next Job scheduled to be run at: {job.next_run_time}[/]")
                 # check if there is any paper in the queu
@@ -260,7 +260,7 @@ def startJob():
             handleGitCommit(f"{(postLen - preLen)} papers downloaded")
             msg = withLoader(
                 handleGitPush, message="Pushing to the remote repo")
-            console.log(msg)
+            console.log("Push Done!")
             sched.shutdown(wait=False)
 
     sched.print_jobs()
