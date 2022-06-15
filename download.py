@@ -253,13 +253,14 @@ def startJob():
                 console.log("Pushing to the remote repo")
                 handleGitPush()
 
-                sleep(.5)
+                
                 print()
                 
-                console.log("Push Done!")
+                print("Push Done!")
+                # console.log("Push Done!")
 
-                console.log(
-                    f"[yellow]Next Job scheduled to be run at: {job.next_run_time}[/]")
+                print(
+                    f"Next Job scheduled to be run at: {job.next_run_time}")
                 # check if there is any paper in the queu
 
         except:
