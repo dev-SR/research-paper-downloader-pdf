@@ -253,8 +253,8 @@ def startJob():
         print()
         try:
             if job.id == 'my_job_id':
-                downloaded = pd.read_csv("data/info/done.csv")
-                postLen = len(downloaded)
+                downloadedPost = pd.read_csv("data/info/done.csv")
+                postLen = len(downloadedPost)
                 handleGitCommit(f"{(postLen - preLen)} papers downloaded")
                 msg = withLoader(
                     handleGitPush, message="Pushing to the remote repo")
@@ -265,8 +265,8 @@ def startJob():
 
         except:
             # all the jobs are done
-            downloaded = pd.read_csv("data/info/done.csv")
-            postLen = len(downloaded)
+            downloadedPost = pd.read_csv("data/info/done.csv")
+            postLen = len(downloadedPost)
             handleGitCommit(f"{(postLen - preLen)} papers downloaded")
             msg = withLoader(
                 handleGitPush, message="Pushing to the remote repo")
