@@ -231,7 +231,7 @@ def startJob():
     msg = withLoader(handleGitPull, message="Pulling from remote repo")
     console.log(msg)
 
-    downloaded = pd.read_csv("data/info/processed.csv")
+    downloaded = pd.read_csv("data/info/done.csv")
     preLen = len(downloaded)
 
     sched = BlockingScheduler(timezone=timezone('Asia/Dhaka'))
@@ -253,13 +253,19 @@ def startJob():
         print()
         try:
             if job.id == 'my_job_id':
+                downloaded = pd.read_csv("data/info/done.csv")
+                postLen = len(downloaded)
+                handleGitCommit(f"{(postLen - preLen)} papers downloaded")
+                msg = withLoader(
+                    handleGitPush, message="Pushing to the remote repo")
+                console.log(msg)
                 console.log(
                     f"[yellow1]Next Job scheduled to be run at: {job.next_run_time}[/]")
                 # check if there is any paper in the queu
 
         except:
             # all the jobs are done
-            downloaded = pd.read_csv("data/info/processed.csv")
+            downloaded = pd.read_csv("data/info/done.csv")
             postLen = len(downloaded)
             handleGitCommit(f"{(postLen - preLen)} papers downloaded")
             msg = withLoader(
