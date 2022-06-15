@@ -149,6 +149,14 @@ def downloadManager():
     for d in next_dl_dict:
         paper_id = d['paper_id']
         uuid = d['uuid']
+
+        pDf = pd.DataFrame([{
+                            'uuid': uuid,
+                            'paper_id': paper_id,
+                            }])
+        pDf.to_csv("data/info/processed.csv",
+                   index=False, header=False, mode="a")
+
         download_links = d['download_link']
         title = d['title']
         links = download_links.split(";")
@@ -164,24 +172,12 @@ def downloadManager():
                 nf = pd.DataFrame([d])
                 nf.to_csv("data/info/not_found.csv",
                           index=False, header=False, mode="a")
-                pDf = pd.DataFrame([{
-                    'uuid': uuid,
-                    'paper_id': paper_id,
-                }])
-                pDf.to_csv("data/info/processed.csv",
-                           index=False, header=False, mode="a")
                 console.log(f"[yellow]No links available[/]")
             else:
                 # already downloaded this paper before
                 if paper_id in paperIds:
-                    dlDf = pd.DataFrame([{
-                        'uuid': uuid,
-                        'paper_id': paper_id,
-                    }])
-                    dlDf.to_csv("data/info/processed.csv",
-                                index=False, header=False, mode="a")
-                    dlDf.to_csv("data/info/done.csv",
-                                index=False, header=False, mode="a")
+                    pDf.to_csv("data/info/done.csv",
+                               index=False, header=False, mode="a")
                     console.log("[green]already downloaded[/]")
                     success = True
                     break
@@ -194,14 +190,8 @@ def downloadManager():
                         code, reason = withLoaderWithParam(
                             downloadSS, [link, paper_id], "Downloading...", 'dots')
                         if code == 0:
-                            dlDf = pd.DataFrame([{
-                                'uuid': uuid,
-                                'paper_id': paper_id,
-                            }])
-                            dlDf.to_csv("data/info/processed.csv",
-                                        index=False, header=False, mode="a")
-                            dlDf.to_csv("data/info/done.csv",
-                                        index=False, header=False, mode="a")
+                            pDf.to_csv("data/info/done.csv",
+                                       index=False, header=False, mode="a")
                             console.log("[bright_green]downloaded[/]")
                             success = True
                             # no need to try other links
