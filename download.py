@@ -184,7 +184,7 @@ def downloadManager():
                 # download the paper
                 else:
                     console.print(
-                        f"[blue1]-> Downloading with link[{i}]:[/] {link}")
+                        f"[blue]-> Downloading with link[{i}]:[/] {link}")
                     try:
                         # code, reason = downloadSS(link, paper_id)
                         code, reason = withLoaderWithParam(
@@ -192,7 +192,7 @@ def downloadManager():
                         if code == 0:
                             pDf.to_csv("data/info/done.csv",
                                        index=False, header=False, mode="a")
-                            console.log("[bright_green]downloaded[/]")
+                            console.log("[green]downloaded[/]")
                             success = True
                             # no need to try other links
                             break
@@ -230,7 +230,7 @@ def startJob():
                   minutes=5,
                   #   seconds=2,
                   next_run_time=datetime.now(),  # start immediately
-                #   end_date=datetime.now() + timedelta(hours=2),
+                  #   end_date=datetime.now() + timedelta(hours=2),
                   id='my_job_id')
 
     def execution_listener(event):
@@ -248,13 +248,13 @@ def startJob():
                 handleGitCommit(f"{(postLen - preLen)} papers downloaded")
                 # msg = withLoader(
                 #     handleGitPush, message="Pushing to the remote repo")
-                
+
                 console.log("Pushing to the remote repo")
                 handleGitPush()
 
                 console.log("Push Done!")
                 console.log(
-                    f"[yellow1]Next Job scheduled to be run at: {job.next_run_time}[/]")
+                    f"[yellow]Next Job scheduled to be run at: {job.next_run_time}[/]")
                 # check if there is any paper in the queu
 
         except:
