@@ -199,12 +199,12 @@ def downloadManager():
                         else:
                             console.log(f"[red]Error:{code} {reason}[/]")
                             errDict = merge_dicts(
-                                d, {'code': code, 'reason': reason})
+                                d, {'code': code, 'reason': e})
                             errors.append(errDict)
 
                     except Exception as e:
                         errDict = merge_dicts(
-                            d, {'code': None, 'reason': reason})
+                            d, {'code': None, 'reason': e})
                         errors.append(errDict)
                         console.log(f"[red]Error:{e}[/]")
         if not success:
