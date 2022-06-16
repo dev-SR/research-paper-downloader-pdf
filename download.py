@@ -180,8 +180,6 @@ def downloadManager():
                                index=False, header=False, mode="a")
                     console.log("[green]already downloaded[/]")
                     success = True
-                if success:
-                    break
                 # download the paper
                 else:
                     console.print(
@@ -205,11 +203,11 @@ def downloadManager():
                             errors.append(errDict)
 
                     except Exception as e:
+                        success = False
                         errDict = merge_dicts(
                             d, {'code': None, 'reason': e})
                         errors.append(errDict)
                         console.log(f"[red]Error:{e}[/]")
-                        success = False
         if not success:
             dlDf = pd.DataFrame(errors)
             dlDf.to_csv("data/info/errors.csv",
