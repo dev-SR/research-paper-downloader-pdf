@@ -180,6 +180,7 @@ def downloadManager():
                                index=False, header=False, mode="a")
                     console.log("[green]already downloaded[/]")
                     success = True
+                    break
                 # download the paper
                 else:
                     console.print(
