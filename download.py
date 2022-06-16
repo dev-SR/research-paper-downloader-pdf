@@ -140,7 +140,7 @@ def downloadManager():
     n = args.n
     inf = pd.read_csv("data/info/papers.csv")
     dl = pd.read_csv("data/info/processed.csv")
-    next_dl = inf[~inf['uuid'].isin(dl['paper_id'])][:n]
+    next_dl = inf[~inf['uuid'].isin(dl['uuid'])][:n]
     next_dl_dict = next_dl.to_dict('records')
     console.print(f"Downloading {n} papers")
 
