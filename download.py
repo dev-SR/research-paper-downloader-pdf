@@ -140,10 +140,7 @@ def downloadManager():
     n = args.n
     inf = pd.read_csv("data/info/papers.csv")
     dl = pd.read_csv("data/info/processed.csv")
-    dl_dict = dl.to_dict('records')
-    uuids = [d['uuid'] for d in dl_dict]
-    paperIds = [d['paper_id'] for d in dl_dict]
-    next_dl = inf[~inf['uuid'].isin(uuids)][:n]
+    next_dl = inf[~inf['uuid'].isin(dl['paper_id'])][:n]
     next_dl_dict = next_dl.to_dict('records')
     console.print(f"Downloading {n} papers")
 
@@ -176,11 +173,14 @@ def downloadManager():
                 console.log(f"[yellow]No links available[/]")
             else:
                 # already downloaded this paper before
+                done = pd.read_csv("data/info/done.csv")
+                paperIds = done['paper_id'].unique().tolist()
                 if paper_id in paperIds:
                     pDf.to_csv("data/info/done.csv",
                                index=False, header=False, mode="a")
                     console.log("[green]already downloaded[/]")
                     success = True
+                if success:
                     break
                 # download the paper
                 else:
@@ -198,6 +198,7 @@ def downloadManager():
                             # no need to try other links
                             break
                         else:
+                            success = False
                             console.log(f"[red]Error:{code} {reason}[/]")
                             errDict = merge_dicts(
                                 d, {'code': code, 'reason': e})
@@ -208,6 +209,7 @@ def downloadManager():
                             d, {'code': None, 'reason': e})
                         errors.append(errDict)
                         console.log(f"[red]Error:{e}[/]")
+                        success = False
         if not success:
             dlDf = pd.DataFrame(errors)
             dlDf.to_csv("data/info/errors.csv",
@@ -253,9 +255,8 @@ def startJob():
                 console.log("Pushing to the remote repo")
                 handleGitPush()
 
-                
                 print()
-                
+
                 print("Push Done!")
                 # console.log("Push Done!")
 
