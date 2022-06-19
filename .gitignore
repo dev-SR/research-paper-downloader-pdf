@@ -168,3 +168,4 @@ auth.ipynb_checkpoints
 *.pdf
 test.py
 files_list.csv
+*.txt
