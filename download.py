@@ -166,6 +166,8 @@ def downloadManager():
             console.log(f"[blue_violet]available links: {str(len(links))}[/]")
 
         for i, link in enumerate(links):
+            if link == "":
+                continue
             if link == 'No links found':
                 nf = pd.DataFrame([d])
                 nf.to_csv("data/info/not_found.csv",
