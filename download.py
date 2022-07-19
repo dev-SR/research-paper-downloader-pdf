@@ -271,12 +271,12 @@ def startJob():
 
         except:
             # all the jobs are done
-            downloadedPost = pd.read_csv("data/info/done.csv")
-            postLen = len(downloadedPost)
-            handleGitCommit(f"{(postLen - preLen)} papers downloaded")
-            msg = withLoader(
-                handleGitPush, message="Pushing to the remote repo")
-            console.log("Push Done!")
+            # downloadedPost = pd.read_csv("data/info/done.csv")
+            # postLen = len(downloadedPost)
+            # handleGitCommit(f"{(postLen - preLen)} papers downloaded")
+            # msg = withLoader(
+            #     handleGitPush, message="Pushing to the remote repo")
+            # console.log("Push Done!")
             sched.shutdown(wait=False)
 
     sched.print_jobs()
