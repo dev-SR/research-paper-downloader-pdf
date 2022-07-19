@@ -158,6 +158,7 @@ def downloadManager():
         download_links = d['download_link']
         title = d['title']
         links = download_links.split(";")
+        print("1")
         print()
         success = False
         errors = []
@@ -167,8 +168,10 @@ def downloadManager():
 
         for i, link in enumerate(links):
             if link == "":
+                print("2")
                 continue
             if link == 'No links found':
+                print("3")
                 nf = pd.DataFrame([d])
                 nf.to_csv("data/info/not_found.csv",
                           index=False, header=False, mode="a")
@@ -178,6 +181,7 @@ def downloadManager():
                 done = pd.read_csv("data/info/done.csv")
                 paperIds = done['paper_id'].unique().tolist()
                 if paper_id in paperIds:
+                    print("4")
                     pDf.to_csv("data/info/done.csv",
                                index=False, header=False, mode="a")
                     console.log("[green]already downloaded[/]")
