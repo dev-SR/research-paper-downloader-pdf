@@ -142,6 +142,9 @@ def downloadManager():
     dl = pd.read_csv("data/info/processed.csv")
     next_dl = inf[~inf['uuid'].isin(dl['uuid'])][:n]
     next_dl_dict = next_dl.to_dict('records')
+    if not next_dl_dict:
+        console.print("\n[yellow]No more papers to download[/]")
+        return
     console.print(f"Downloading {n} papers")
 
     for d in next_dl_dict:
@@ -254,9 +257,6 @@ def startJob():
                 downloadedPost = pd.read_csv("data/info/done.csv")
                 postLen = len(downloadedPost)
                 handleGitCommit(f"{(postLen - preLen)} papers downloaded")
-                # msg = withLoader(
-                #     handleGitPush, message="Pushing to the remote repo")
-
                 console.log("Pushing to the remote repo")
                 handleGitPush()
 
@@ -271,12 +271,12 @@ def startJob():
 
         except:
             # all the jobs are done
-            # downloadedPost = pd.read_csv("data/info/done.csv")
-            # postLen = len(downloadedPost)
-            # handleGitCommit(f"{(postLen - preLen)} papers downloaded")
-            # msg = withLoader(
-            #     handleGitPush, message="Pushing to the remote repo")
-            # console.log("Push Done!")
+            downloadedPost = pd.read_csv("data/info/done.csv")
+            postLen = len(downloadedPost)
+            handleGitCommit(f"{(postLen - preLen)} papers downloaded")
+            msg = withLoader(
+                handleGitPush, message="Pushing to the remote repo")
+            console.log("Push Done!")
             sched.shutdown(wait=False)
 
     sched.print_jobs()
